@@ -1,0 +1,21 @@
+{
+  "name": "behance/nbd.php-gatekeeper",
+  "description": "Behance Gatekeeper",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.6"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Behance\\NBD\\Gatekeeper\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Behance\\NBD\\Gatekeeper\\Test\\": "tests/lib/"
+    }
+  }
+}
