@@ -4,6 +4,8 @@ namespace Behance\NBD\Gatekeeper\Rules;
 
 class BetweenTimesRule extends TimeRuleAbstract implements RuleInterface {
 
+  const RULE_NAME = 'between_time';
+
   /**
    * @var \DateTimeImmutable
    */

@@ -4,6 +4,8 @@ namespace Behance\NBD\Gatekeeper\Rules;
 
 class StartTimeRule extends TimeRuleAbstract implements RuleInterface {
 
+  const RULE_NAME = 'start_time';
+
   /**
    * @var \DateTimeImmutable
    */

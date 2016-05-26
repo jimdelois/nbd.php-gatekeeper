@@ -4,6 +4,8 @@ namespace Behance\NBD\Gatekeeper\Rules;
 
 class EndTimeRule extends TimeRuleAbstract implements RuleInterface {
 
+  const RULE_NAME = 'end_time';
+
   /**
    * @var \DateTimeImmutable
    */

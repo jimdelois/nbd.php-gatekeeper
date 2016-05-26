@@ -4,6 +4,8 @@ namespace Behance\NBD\Gatekeeper\Rules;
 
 class BinaryRule implements RuleInterface {
 
+  const RULE_NAME = 'binary';
+
   /**
    * @var bool
    */

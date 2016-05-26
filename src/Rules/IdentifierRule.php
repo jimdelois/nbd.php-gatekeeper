@@ -4,6 +4,8 @@ namespace Behance\NBD\Gatekeeper\Rules;
 
 class IdentifierRule implements RuleInterface {
 
+  const RULE_NAME = 'identifier';
+
   /**
    * @var array
    */
