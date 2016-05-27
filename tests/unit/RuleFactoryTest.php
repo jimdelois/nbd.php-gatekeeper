@@ -151,4 +151,4 @@ class RuleFactoryTest extends BaseTest {
 
   } // createEndTimeRuleFail
 
-}
+} // RuleFactoryTest
