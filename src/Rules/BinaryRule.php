@@ -18,7 +18,7 @@ class BinaryRule implements RuleInterface {
 
     $this->_value = $value;
 
-  } // __contruct
+  } // __construct
 
   /**
    * {@inheritdoc}

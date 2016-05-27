@@ -4,7 +4,7 @@ namespace Behance\NBD\Gatekeeper;
 
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
-use Behance\NBD\Gatekeeper\RulesetProviders\ConfigProvider;
+use Behance\NBD\Gatekeeper\RulesetProviders\ConfigRulesetProvider;
 use Behance\NBD\Gatekeeper\Test\BaseTest;
 
 class GatekeeperTest extends BaseTest {
@@ -34,8 +34,10 @@ class GatekeeperTest extends BaseTest {
   private $_gatekeeper;
 
   public function setUp() {
-    $this->_gatekeeper = new Gatekeeper( new ConfigProvider(self::CONFIG) );
-  }
+
+    $this->_gatekeeper = new Gatekeeper( new ConfigRulesetProvider( self::CONFIG ) );
+
+  } // setUp
 
   /**
    * @test
@@ -61,4 +63,4 @@ class GatekeeperTest extends BaseTest {
 
   } // canAccessMultipleIdentifiers
 
-}
+} // GatekeeperTest

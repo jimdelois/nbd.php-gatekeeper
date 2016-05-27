@@ -26,7 +26,7 @@ class IdentifierRuleTest extends BaseTest {
       $this->assertTrue( $rule->canAccess( $identifier ) );
     }
 
-  }
+  } // canAccess
 
   /**
    * @test
@@ -36,10 +36,9 @@ class IdentifierRuleTest extends BaseTest {
     $rule = new IdentifierRule();
 
     foreach ( self::TEST_IDENTIFIERS as $identifier ) {
-      $this->assertFalse($rule->canAccess($identifier));
+      $this->assertFalse( $rule->canAccess( $identifier ) );
     }
 
-  }
+  } // noAccess
 
-
-}
+} // IdentifierRuleTest

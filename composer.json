@@ -6,6 +6,7 @@
     "php": ">=5.6"
   },
   "require-dev": {
+    "behance/php-sniffs": "~2.1",
     "phpunit/phpunit": "~5.0"
   },
   "autoload": {
@@ -17,5 +18,11 @@
     "psr-4": {
       "Behance\\NBD\\Gatekeeper\\Test\\": "tests/lib/"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:behance/php-sniffs.git"
+    }
+  ]
 }
