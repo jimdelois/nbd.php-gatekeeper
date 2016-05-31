@@ -6,7 +6,7 @@ use Behance\NBD\Gatekeeper\RuleFactory;
 use Behance\NBD\Gatekeeper\Ruleset;
 use Behance\NBD\Gatekeeper\RulesetProviderInterface;
 
-class ConfigProvider implements RulesetProviderInterface {
+class ConfigRulesetProvider implements RulesetProviderInterface {
 
   private $_config;
 
@@ -15,11 +15,14 @@ class ConfigProvider implements RulesetProviderInterface {
    */
   private $_generated_rulesets = [];
 
+  /**
+   * @param array $config
+   */
   public function __construct( array $config ) {
 
     $this->_config = $config;
 
-  }
+  } // __construct
 
   /**
    * {@inheritdoc}
@@ -32,23 +35,23 @@ class ConfigProvider implements RulesetProviderInterface {
 
     $ruleset = new Ruleset();
 
-    if ( !isset( $this->_config[$feature] ) ) {
+    if ( !isset( $this->_config[ $feature ] ) ) {
       return $ruleset;
     }
 
-    $raw_rules = $this->_config[$feature];
+    $raw_rules = $this->_config[ $feature ];
 
     foreach ( $raw_rules as $rule_info ) {
 
       $rule = RuleFactory::create( $rule_info['type'], $rule_info['params'] );
       $ruleset->addRule( $rule );
 
-    }
+    } // foreach raw_rules
 
-    $this->_generated_rulesets[$feature] = $ruleset;
+    $this->_generated_rulesets[ $feature ] = $ruleset;
 
     return $ruleset;
 
   } // getRuleset
 
-}
+} // ConfigRulesetProvider

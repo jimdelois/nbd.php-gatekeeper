@@ -37,4 +37,4 @@ class Gatekeeper {
 
   } // canAccess
 
-} // GatekeeperClient
+} // Gatekeeper

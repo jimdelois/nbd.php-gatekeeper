@@ -7,7 +7,7 @@ use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
 use Behance\NBD\Gatekeeper\Ruleset;
 use Behance\NBD\Gatekeeper\Test\BaseTest;
 
-class ConfigProviderTest extends BaseTest {
+class ConfigRulesetProviderTest extends BaseTest {
 
   const CONFIG = [
       'test_feature' => [
@@ -35,7 +35,7 @@ class ConfigProviderTest extends BaseTest {
 
   public function setUp() {
 
-    $this->_ruleset_provider = new ConfigProvider(self::CONFIG);
+    $this->_ruleset_provider = new ConfigRulesetProvider( self::CONFIG );
 
   } // setUp
 
@@ -72,4 +72,4 @@ class ConfigProviderTest extends BaseTest {
 
   } // getRulesetNonExistentFeature
 
-} // ConfigProviderTest
+} // ConfigRulesetProviderTest

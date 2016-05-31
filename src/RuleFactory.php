@@ -65,8 +65,8 @@ class RuleFactory {
       throw new MissingRuleParameterException( 'Missing required rule parameter "' . $param_name . '" for "' . $rule_type . '" rule' );
     }
 
-    return $params[$param_name];
+    return $params[ $param_name ];
 
-  } // getRuleParam
+  } // _getRuleParam
 
 } // RuleFactory

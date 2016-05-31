@@ -6,3 +6,6 @@ php:
 
 install:
   - composer install
+
+script:
+  - ./vendor/bin/phpcs --standard=./vendor/behance/php-sniffs/Behance/ruleset.xml ./src ./tests

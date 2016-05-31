@@ -25,12 +25,13 @@ class StartTimeRuleTest extends BaseTest {
 
     $this->assertEquals( $expected, $rule->canAccess() );
 
-  }
+  } // canAccess
 
   /**
    * @return array
    */
   public function timeProvider() {
+
     return [
         [
             new \DateTimeImmutable( 'May 15, 2016 20:15:15' ),
@@ -58,6 +59,7 @@ class StartTimeRuleTest extends BaseTest {
             false
         ],
     ];
+
   } // timeProvider
 
-} // StartTimeTest
+} // StartTimeRuleTest

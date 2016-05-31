@@ -26,4 +26,4 @@ class BinaryRuleTest extends BaseTest {
 
   } // canAccessNo
 
-}
+} // BinaryRuleTest

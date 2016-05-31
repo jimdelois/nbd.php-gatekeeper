@@ -41,7 +41,7 @@ class Ruleset {
         return true;
       }
 
-    }
+    } // foreach rules
 
     return false;
 
