@@ -54,4 +54,13 @@ class ConfigRulesetProvider implements RulesetProviderInterface {
 
   } // getRuleset
 
+  /**
+   * @return string[]
+   */
+  public function getFeatures() {
+
+    return array_keys( $this->_config );
+
+  } // getFeatures
+
 } // ConfigRulesetProvider
