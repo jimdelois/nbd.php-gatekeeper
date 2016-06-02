@@ -9,24 +9,8 @@ use Behance\NBD\Gatekeeper\Test\BaseTest;
 
 class GatekeeperTest extends BaseTest {
 
-  const CONFIG = [
-      'test_feature' => [
-          [
-              'type'   => BinaryRule::RULE_NAME,
-              'params' => [
-                  'on' => true
-              ]
-          ]
-      ],
-      'per_user_feature' => [
-          [
-              'type'   => IdentifierRule::RULE_NAME,
-              'params' => [
-                  'valid_identifiers' => [ 123, 456 ]
-              ]
-          ]
-      ]
-  ];
+  const TEST_FEATURE     = 'test_feature';
+  const PER_USER_FEATURE = 'per_user_feature';
 
   /**
    * @var \Behance\NBD\Gatekeeper\Gatekeeper
@@ -35,7 +19,26 @@ class GatekeeperTest extends BaseTest {
 
   public function setUp() {
 
-    $this->_gatekeeper = new Gatekeeper( new ConfigRulesetProvider( self::CONFIG ) );
+    $config = [
+        self::TEST_FEATURE => [
+            [
+                'type'   => BinaryRule::RULE_NAME,
+                'params' => [
+                    'on' => true
+                ]
+            ]
+        ],
+        self::PER_USER_FEATURE => [
+            [
+                'type'   => IdentifierRule::RULE_NAME,
+                'params' => [
+                    'valid_identifiers' => [ 123, 456 ]
+                ]
+            ]
+        ]
+    ];
+
+    $this->_gatekeeper = new Gatekeeper( new ConfigRulesetProvider( $config ) );
 
   } // setUp
 
@@ -44,10 +47,10 @@ class GatekeeperTest extends BaseTest {
    */
   public function canAccessSingleIdentifier() {
 
-    $this->assertTrue( $this->_gatekeeper->canAccess( 'test_feature' ) );
-    $this->assertTrue( $this->_gatekeeper->canAccess( 'per_user_feature', 456 ) );
-    $this->assertFalse( $this->_gatekeeper->canAccess( 'per_user_feature' ) );
-    $this->assertFalse( $this->_gatekeeper->canAccess( 'per_user_feature', 789 ) );
+    $this->assertTrue( $this->_gatekeeper->canAccess( self::TEST_FEATURE ) );
+    $this->assertTrue( $this->_gatekeeper->canAccess( self::PER_USER_FEATURE, 456 ) );
+    $this->assertFalse( $this->_gatekeeper->canAccess( self::PER_USER_FEATURE ) );
+    $this->assertFalse( $this->_gatekeeper->canAccess( self::PER_USER_FEATURE, 789 ) );
 
   } // canAccessSingleIdentifier
 
@@ -56,11 +59,24 @@ class GatekeeperTest extends BaseTest {
    */
   public function canAccessMultipleIdentifiers() {
 
-    $this->assertTrue( $this->_gatekeeper->canAccess( 'test_feature', [ 123, 456 ] ) );
-    $this->assertTrue( $this->_gatekeeper->canAccess( 'per_user_feature', [ 123, 456 ] ) );
-    $this->assertFalse( $this->_gatekeeper->canAccess( 'per_user_feature', [ 897, 111 ] ) );
-    $this->assertTrue( $this->_gatekeeper->canAccess( 'per_user_feature', [ 111, 123 ] ) );
+    $this->assertTrue( $this->_gatekeeper->canAccess( self::TEST_FEATURE, [ 123, 456 ] ) );
+    $this->assertTrue( $this->_gatekeeper->canAccess( self::PER_USER_FEATURE, [ 123, 456 ] ) );
+    $this->assertFalse( $this->_gatekeeper->canAccess( self::PER_USER_FEATURE, [ 897, 111 ] ) );
+    $this->assertTrue( $this->_gatekeeper->canAccess( self::PER_USER_FEATURE, [ 111, 123 ] ) );
 
   } // canAccessMultipleIdentifiers
+
+  /**
+   * @test
+   */
+  public function getActiveFeatures() {
+
+    $this->assertEquals( [ self::TEST_FEATURE ],                         $this->_gatekeeper->getActiveFeatures() );
+    $this->assertEquals( [ self::TEST_FEATURE ],                         $this->_gatekeeper->getActiveFeatures( 4567 ) );
+    $this->assertEquals( [ self::TEST_FEATURE, self::PER_USER_FEATURE ], $this->_gatekeeper->getActiveFeatures( 123 ) );
+    $this->assertEquals( [ self::TEST_FEATURE, self::PER_USER_FEATURE ], $this->_gatekeeper->getActiveFeatures( [ 123 ] ) );
+    $this->assertEquals( [ self::TEST_FEATURE, self::PER_USER_FEATURE ], $this->_gatekeeper->getActiveFeatures( [ 111, 456 ] ) );
+
+  } // getActiveFeatures
 
 } // GatekeeperTest

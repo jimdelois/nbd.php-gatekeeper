@@ -11,4 +11,9 @@ interface RulesetProviderInterface {
    */
   public function getRuleset( $feature );
 
+  /**
+   * @return string[]
+   */
+  public function getFeatures();
+
 } // RulesetProviderInterface

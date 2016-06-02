@@ -9,7 +9,7 @@ class IdentifierHashBucket {
   /**
    * @var string
    */
-  private $_feature;
+  private $_salt;
 
   /**
    * @var mixed
@@ -27,13 +27,13 @@ class IdentifierHashBucket {
   private $_bucket = null;
 
   /**
-   * @param string $feature
+   * @param string $salt - right now the callers of this class all use feature name as salt
    * @param mixed  $identifier
    * @param int $num_buckets
    */
-  public function __construct( $feature, $identifier, $num_buckets = self::DEFAULT_NUM_BUCKETS ) {
+  public function __construct( $salt, $identifier, $num_buckets = self::DEFAULT_NUM_BUCKETS ) {
 
-    $this->_feature     = $feature;
+    $this->_salt        = $salt;
     $this->_identifier  = $identifier;
     $this->_num_buckets = $num_buckets;
 
@@ -54,7 +54,7 @@ class IdentifierHashBucket {
 
   protected function _calculateBucket() {
 
-    $hash          = crc32( $this->_feature . $this->_identifier );
+    $hash          = abs( crc32( $this->_salt . $this->_identifier ) );
     $this->_bucket = ( $hash % $this->_num_buckets ) + 1;
 
   } // _calculateBucket

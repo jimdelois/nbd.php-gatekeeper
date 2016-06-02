@@ -12,15 +12,15 @@ class IdentifierHashBucketTest extends BaseTest {
    */
   public function getBucketDefault( $identifier, $expected_feature_1_bucket, $expected_feature_2_bucket ) {
 
-    $feature_1 = 'my_test_feature';
-    $feature_2 = 'another_feature';
+    $salt_1 = 'my_test_feature';
+    $salt_2 = 'another_feature';
 
-    $identifier_hash_bucket = new IdentifierHashBucket( $feature_1, $identifier );
+    $identifier_hash_bucket = new IdentifierHashBucket( $salt_1, $identifier );
 
     $this->assertEquals( $expected_feature_1_bucket, $identifier_hash_bucket->getBucket() );
     $this->assertEquals( $expected_feature_1_bucket, $identifier_hash_bucket->getBucket() );
 
-    $identifier_hash_bucket = new IdentifierHashBucket( $feature_2, $identifier );
+    $identifier_hash_bucket = new IdentifierHashBucket( $salt_2, $identifier );
 
     $this->assertEquals( $expected_feature_2_bucket, $identifier_hash_bucket->getBucket() );
     $this->assertEquals( $expected_feature_2_bucket, $identifier_hash_bucket->getBucket() );
@@ -48,16 +48,16 @@ class IdentifierHashBucketTest extends BaseTest {
    */
   public function getBucketWithNum( $identifier, $expected_feature_1_bucket, $expected_feature_2_bucket ) {
 
-    $feature_1   = 'my_test_feature';
-    $feature_2   = 'banother_feature';
+    $salt_1   = 'my_test_feature';
+    $salt_2   = 'banother_feature';
     $num_buckets = 10;
 
-    $identifier_hash_bucket = new IdentifierHashBucket( $feature_1, $identifier, $num_buckets );
+    $identifier_hash_bucket = new IdentifierHashBucket( $salt_1, $identifier, $num_buckets );
 
     $this->assertEquals( $expected_feature_1_bucket, $identifier_hash_bucket->getBucket() );
     $this->assertEquals( $expected_feature_1_bucket, $identifier_hash_bucket->getBucket() );
 
-    $identifier_hash_bucket = new IdentifierHashBucket( $feature_2, $identifier, $num_buckets );
+    $identifier_hash_bucket = new IdentifierHashBucket( $salt_2, $identifier, $num_buckets );
 
     $this->assertEquals( $expected_feature_2_bucket, $identifier_hash_bucket->getBucket() );
     $this->assertEquals( $expected_feature_2_bucket, $identifier_hash_bucket->getBucket() );
