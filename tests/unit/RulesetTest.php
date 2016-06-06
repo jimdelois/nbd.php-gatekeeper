@@ -4,6 +4,7 @@ namespace Behance\NBD\Gatekeeper;
 
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
+use Behance\NBD\Gatekeeper\Rules\PercentageRule;
 use Behance\NBD\Gatekeeper\Rules\StartTimeRule;
 use Behance\NBD\Gatekeeper\Test\BaseTest;
 
@@ -76,5 +77,30 @@ class RulesetTest extends BaseTest {
     $this->assertTrue( $ruleset->canAccess( 123 ) );
 
   } // canAccess
+
+  /**
+   * @test
+   */
+  public function hasRuleOfType() {
+
+    $rule_1 = new BinaryRule( true );
+    $rule_2 = new PercentageRule( 20, 'some_feature' );
+
+    $ruleset = new Ruleset();
+
+    $this->assertFalse( $ruleset->hasRuleOfType( BinaryRule::RULE_NAME ) );
+    $this->assertFalse( $ruleset->hasRuleOfType( PercentageRule::RULE_NAME ) );
+
+    $ruleset->addRule( $rule_1 );
+
+    $this->assertTrue( $ruleset->hasRuleOfType( BinaryRule::RULE_NAME ) );
+
+    $ruleset->addRule( $rule_2 );
+
+    $this->assertTrue( $ruleset->hasRuleOfType( BinaryRule::RULE_NAME ) );
+    $this->assertTrue( $ruleset->hasRuleOfType( PercentageRule::RULE_NAME ) );
+    $this->assertFalse( $ruleset->hasRuleOfType( IdentifierRule::RULE_NAME ) );
+
+  } // hasRuleOfType
 
 } // RulesetTest

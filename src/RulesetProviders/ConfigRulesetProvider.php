@@ -43,7 +43,7 @@ class ConfigRulesetProvider implements RulesetProviderInterface {
 
     foreach ( $raw_rules as $rule_info ) {
 
-      $rule = RuleFactory::create( $rule_info['type'], $rule_info['params'] );
+      $rule = RuleFactory::create( $rule_info['type'], $rule_info['params'], $feature );
       $ruleset->addRule( $rule );
 
     } // foreach raw_rules

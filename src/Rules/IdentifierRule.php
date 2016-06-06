@@ -2,7 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper\Rules;
 
-class IdentifierRule implements RuleInterface {
+class IdentifierRule extends RuleAbstract {
 
   const RULE_NAME = 'identifier';
 

@@ -2,7 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper\Rules;
 
-class BetweenTimesRule extends TimeRuleAbstract implements RuleInterface {
+class BetweenTimesRule extends TimeRuleAbstract {
 
   const RULE_NAME = 'between_time';
 

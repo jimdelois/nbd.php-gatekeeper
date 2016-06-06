@@ -31,6 +31,7 @@ class Ruleset {
 
   /**
    * @param  mixed $identifier
+   *
    * @return bool
    */
   public function canAccess( $identifier = null ) {
@@ -46,5 +47,22 @@ class Ruleset {
     return false;
 
   } // canAccess
+
+  /**
+   * @param $rule_type
+   *
+   * @return bool
+   */
+  public function hasRuleOfType( $rule_type ) {
+
+    foreach ( $this->_rules as $rule ) {
+      if ( $rule->getType() === $rule_type ) {
+        return true;
+      }
+    }
+
+    return false;
+
+  } // hasRuleOfType
 
 } // Ruleset

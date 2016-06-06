@@ -2,7 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper\Rules;
 
-class EndTimeRule extends TimeRuleAbstract implements RuleInterface {
+class EndTimeRule extends TimeRuleAbstract {
 
   const RULE_NAME = 'end_time';
 
