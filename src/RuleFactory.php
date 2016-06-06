@@ -8,6 +8,7 @@ use Behance\NBD\Gatekeeper\Rules\BetweenTimesRule;
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
+use Behance\NBD\Gatekeeper\Rules\PercentageRule;
 use Behance\NBD\Gatekeeper\Rules\StartTimeRule;
 
 class RuleFactory {
@@ -15,13 +16,14 @@ class RuleFactory {
   /**
    * @param  string $type
    * @param  array $params
+   * @param  string|null $feature
    *
    * @return \Behance\NBD\Gatekeeper\Rules\RuleInterface
    *
    * @throws \Behance\NBD\Gatekeeper\Exceptions\MissingRuleParameterException
    * @throws \Behance\NBD\Gatekeeper\Exceptions\UnknownRuleTypeException
    */
-  public static function create( $type, array $params = [] ) {
+  public static function create( $type, array $params = [], $feature = null ) {
 
     switch ( $type ) {
 
@@ -42,7 +44,18 @@ class RuleFactory {
 
       case EndTimeRule::RULE_NAME:
         return new EndTimeRule( self::_getRuleParam( 'end', $type, $params ) );
-   
+
+      case PercentageRule::RULE_NAME:
+
+        if ( $feature == null ) {
+          throw new MissingRuleParameterException( 'Missing required $feature parameter for PercentageRule' );
+        }
+
+        return new PercentageRule(
+            self::_getRuleParam( 'percentage', $type, $params ),
+            $feature
+        );
+
       default:
         throw new UnknownRuleTypeException( 'Couldn\'t find rule of type "' . $type . '"' );
 

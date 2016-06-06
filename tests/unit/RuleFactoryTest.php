@@ -4,10 +4,12 @@ namespace Behance\NBD\Gatekeeper;
 
 use Behance\NBD\Gatekeeper\Exceptions\MissingRuleParameterException;
 use Behance\NBD\Gatekeeper\Exceptions\UnknownRuleTypeException;
+use Behance\NBD\Gatekeeper\IdentifierHashBucket;
 use Behance\NBD\Gatekeeper\Rules\BetweenTimesRule;
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
+use Behance\NBD\Gatekeeper\Rules\PercentageRule;
 use Behance\NBD\Gatekeeper\Rules\StartTimeRule;
 use Behance\NBD\Gatekeeper\Test\BaseTest;
 
@@ -150,5 +152,63 @@ class RuleFactoryTest extends BaseTest {
     RuleFactory::create( EndTimeRule::RULE_NAME );
 
   } // createEndTimeRuleFail
+
+  /**
+   * @test
+   */
+  public function createPercentageRuleSuccess() {
+
+    $rule = RuleFactory::create(
+        PercentageRule::RULE_NAME,
+        [
+            'percentage' => 10,
+        ],
+        'feature'
+    );
+
+    $this->assertInstanceOf( PercentageRule::class, $rule );
+
+  } // createPercentageRuleSuccess
+
+  /**
+   * @test
+   */
+  public function createPercentageRuleFeatureMissingFail() {
+
+    $this->expectException( MissingRuleParameterException::class );
+
+    RuleFactory::create(
+        PercentageRule::RULE_NAME,
+        [ 'percentage' => 10 ]
+    );
+
+  } // createPercentageRuleFeatureMissingFail
+
+  /**
+   * @test
+   */
+  public function createPercentageRulePercentageMissingFail() {
+
+    $this->expectException( MissingRuleParameterException::class );
+
+    RuleFactory::create(
+        PercentageRule::RULE_NAME,
+        [ 'feature' => 'feature' ]
+    );
+
+  } // createPercentageRulePercentageMissingFail
+
+  /**
+   * @test
+   */
+  public function createPercentageRuleParamMissingFail() {
+
+    $this->expectException( MissingRuleParameterException::class );
+
+    RuleFactory::create(
+        PercentageRule::RULE_NAME
+    );
+
+  } // createPercentageRuleParamMissingFail
 
 } // RuleFactoryTest
