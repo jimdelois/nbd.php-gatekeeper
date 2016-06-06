@@ -5,7 +5,7 @@ namespace Behance\NBD\Gatekeeper\Rules;
 use Behance\NBD\Gatekeeper\Exceptions\ParameterValidationException;
 use Behance\NBD\Gatekeeper\IdentifierHashBucket;
 
-class PercentageRule implements RuleInterface {
+class PercentageRule extends RuleAbstract {
 
   const RULE_NAME = 'percentage';
 

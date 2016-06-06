@@ -2,7 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper\Rules;
 
-class BinaryRule implements RuleInterface {
+class BinaryRule extends RuleAbstract {
 
   const RULE_NAME = 'binary';
 

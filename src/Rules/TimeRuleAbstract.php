@@ -2,7 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper\Rules;
 
-abstract class TimeRuleAbstract {
+abstract class TimeRuleAbstract extends RuleAbstract {
 
   /**
    * @return \DateTimeImmutable

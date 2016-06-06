@@ -2,7 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper\Rules;
 
-class StartTimeRule extends TimeRuleAbstract implements RuleInterface {
+class StartTimeRule extends TimeRuleAbstract {
 
   const RULE_NAME = 'start_time';
 
