@@ -2,6 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper;
 
+use Behance\NBD\Gatekeeper\Exceptions\DateTimeImmutableException;
 use Behance\NBD\Gatekeeper\Exceptions\MissingRuleParameterException;
 use Behance\NBD\Gatekeeper\Exceptions\UnknownRuleTypeException;
 use Behance\NBD\Gatekeeper\Rules\BetweenTimesRule;
@@ -28,22 +29,31 @@ class RuleFactory {
     switch ( $type ) {
 
       case BinaryRule::RULE_NAME:
-        return new BinaryRule( self::_getRuleParam( 'on', $type, $params ) );
+        return new BinaryRule(
+            self::_getRuleParam( 'on', $type, $params )
+        );
 
       case IdentifierRule::RULE_NAME:
-        return new IdentifierRule( self::_getRuleParam( 'valid_identifiers', $type, $params ) );
+        return new IdentifierRule(
+            self::_getRuleParam( 'valid_identifiers', $type, $params )
+        );
 
       case BetweenTimesRule::RULE_NAME:
+
         return new BetweenTimesRule(
-            self::_getRuleParam( 'from', $type, $params ),
-            self::_getRuleParam( 'to', $type, $params )
+            self::_getDateImmutableObject( self::_getRuleParam( 'from', $type, $params ) ),
+            self::_getDateImmutableObject( self::_getRuleParam( 'to', $type, $params ) )
         );
 
       case StartTimeRule::RULE_NAME:
-        return new StartTimeRule( self::_getRuleParam( 'start', $type, $params ) );
+        return new StartTimeRule(
+            self::_getDateImmutableObject( self::_getRuleParam( 'start', $type, $params ) )
+        );
 
       case EndTimeRule::RULE_NAME:
-        return new EndTimeRule( self::_getRuleParam( 'end', $type, $params ) );
+        return new EndTimeRule(
+            self::_getDateImmutableObject( self::_getRuleParam( 'end', $type, $params ) )
+        );
 
       case PercentageRule::RULE_NAME:
 
@@ -81,5 +91,40 @@ class RuleFactory {
     return $params[ $param_name ];
 
   } // _getRuleParam
+
+  /**
+   * @param mixed $date_time
+   *
+   * @return \DateTimeImmutable
+   *
+   * @throws Behance\NBD\Gatekeeper\Exceptions\DateTimeImmutableException
+   */
+  private static function _getDateImmutableObject( $date_time ) {
+
+    if ( $date_time instanceof \DateTimeImmutable ) {
+      return $date_time;
+    }
+
+    try {
+
+      if ( ctype_digit( (string) $date_time ) ) {
+        return new \DateTimeImmutable( "@{$date_time}" );
+      }
+
+      if ( is_string( $date_time ) ) {
+        return new \DateTimeImmutable( "{$date_time}" );
+      }
+
+    } // try date time format
+
+    // @codingStandardsIgnoreStart
+    catch( \Exception $e ) {
+    // @codingStandardsIgnoreEnd
+
+      throw new DateTimeImmutableException( "Invalid date_time format. {$date_time} given." );
+
+    } // catch date time excpetion
+
+  } // _getDateImmutableObject
 
 } // RuleFactory

@@ -2,6 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper;
 
+use Behance\NBD\Gatekeeper\Exceptions\DateTimeImmutableException;
 use Behance\NBD\Gatekeeper\Exceptions\MissingRuleParameterException;
 use Behance\NBD\Gatekeeper\Exceptions\UnknownRuleTypeException;
 use Behance\NBD\Gatekeeper\IdentifierHashBucket;
@@ -81,7 +82,7 @@ class RuleFactoryTest extends BaseTest {
   /**
    * @test
    */
-  public function createBetweenTimeRuleSuccess() {
+  public function createBetweenTimeRuleObjectSuccess() {
 
     $rule = RuleFactory::create( BetweenTimesRule::RULE_NAME, [
         'from' => new \DateTimeImmutable(),
@@ -90,12 +91,69 @@ class RuleFactoryTest extends BaseTest {
 
     $this->assertInstanceOf( BetweenTimesRule::class, $rule );
 
-  } // createBetweenTimeRuleSuccess
+  } // createBetweenTimeRuleObjectSuccess
+
 
   /**
    * @test
    */
-  public function createBetweenTimeRuleFail() {
+  public function createBetweenTimeRuleEpochStringSuccess() {
+
+    $rule = RuleFactory::create( BetweenTimesRule::RULE_NAME, [
+        'from' => '1465238714',
+        'to'   => '1465238715',
+    ] );
+
+    $this->assertInstanceOf( BetweenTimesRule::class, $rule );
+
+  } // createBetweenTimeRuleEpochStringSuccess
+
+  /**
+   * @test
+   */
+  public function createBetweenTimeRuleEpochIntSuccess() {
+
+    $rule = RuleFactory::create( BetweenTimesRule::RULE_NAME, [
+        'from' => 1465238714,
+        'to'   => 1465238714,
+    ] );
+
+    $this->assertInstanceOf( BetweenTimesRule::class, $rule );
+
+  } // createBetweenTimeRuleEpochIntSuccess
+
+  /**
+   * @test
+   */
+  public function createBetweenTimeRuleStringSuccess() {
+
+    $rule = RuleFactory::create( BetweenTimesRule::RULE_NAME, [
+        'from' => 'Mon, 06 Jun 2016 18:45:13 GMT',
+        'to'   => 'Mon, 06 Jun 2016 18:45:13 GMT',
+    ] );
+
+    $this->assertInstanceOf( BetweenTimesRule::class, $rule );
+
+  } // createBetweenTimeRuleStringSuccess
+
+  /**
+   * @test
+   */
+  public function createBetweenTimeRuleStringFormatFail() {
+
+    $this->expectException( DateTimeImmutableException::class );
+
+    RuleFactory::create( BetweenTimesRule::RULE_NAME, [
+        'from' => 'gibberish',
+        'to'   => 'gibberish',
+    ] );
+
+  } // createBetweenTimeRuleStringFormatFail
+
+  /**
+   * @test
+   */
+  public function createBetweenTimeRuleParamFail() {
 
     $this->expectException( MissingRuleParameterException::class );
 
@@ -103,12 +161,12 @@ class RuleFactoryTest extends BaseTest {
         'from' => new \DateTimeImmutable()
     ] );
 
-  } // createBetweenTimeRuleFail
+  } // createBetweenTimeRuleParamFail
 
   /**
    * @test
    */
-  public function createStartTimeRuleSuccess() {
+  public function createStartTimeRuleObjectSuccess() {
 
     $rule = RuleFactory::create( StartTimeRule::RULE_NAME, [
         'start' => new \DateTimeImmutable()
@@ -116,7 +174,46 @@ class RuleFactoryTest extends BaseTest {
 
     $this->assertInstanceOf( StartTimeRule::class, $rule );
 
-  } // createStartTimeRuleSuccess
+  } // createStartTimeRuleObjectSuccess
+
+  /**
+   * @test
+   */
+  public function createStartTimeRuleEpochStringSuccess() {
+
+    $rule = RuleFactory::create( StartTimeRule::RULE_NAME, [
+        'start' => '1465238714'
+    ] );
+
+    $this->assertInstanceOf( StartTimeRule::class, $rule );
+
+  } // createStartTimeRuleEpochStringSuccess
+
+  /**
+   * @test
+   */
+  public function createStartTimeRuleEpochIntSuccess() {
+
+    $rule = RuleFactory::create( StartTimeRule::RULE_NAME, [
+        'start' => 1465238714
+    ] );
+
+    $this->assertInstanceOf( StartTimeRule::class, $rule );
+
+  } // createStartTimeRuleEpochIntSuccess
+
+  /**
+   * @test
+   */
+  public function createStartTimeRuleStringSuccess() {
+
+    $rule = RuleFactory::create( StartTimeRule::RULE_NAME, [
+        'start' => 'Mon, 06 Jun 2016 18:45:13 GMT'
+    ] );
+
+    $this->assertInstanceOf( StartTimeRule::class, $rule );
+
+  } // createStartTimeRuleStringSuccess
 
   /**
    * @test
@@ -129,10 +226,20 @@ class RuleFactoryTest extends BaseTest {
 
   } // createStartTimeRuleFail
 
+  public function createStartTimeRuleStringFormatFail() {
+
+    $this->expectException( DateTimeImmutableException::class );
+
+    RuleFactory::create( StartTimeRule::RULE_NAME, [
+        'start' => 'gibberish'
+    ] );
+
+  } // createStartTimeRuleStringFormatFail
+
   /**
    * @test
    */
-  public function createEndTimeRuleSuccess() {
+  public function createEndTimeRuleObjectSuccess() {
 
     $rule = RuleFactory::create( EndTimeRule::RULE_NAME, [
         'end' => new \DateTimeImmutable()
@@ -140,7 +247,38 @@ class RuleFactoryTest extends BaseTest {
 
     $this->assertInstanceOf( EndTimeRule::class, $rule );
 
-  } // createEndTimeRuleSuccess
+  } // createEndTimeRuleObjectSuccess
+
+  public function createEndTimeRuleEpochStringSuccess() {
+
+    $rule = RuleFactory::create( EndTimeRule::RULE_NAME, [
+        'end' => '1465238714'
+    ] );
+
+    $this->assertInstanceOf( EndTimeRule::class, $rule );
+
+  } // createEndTimeRuleEpochStringSuccess
+
+
+  public function createEndTimeRuleEpochIntSuccess() {
+
+    $rule = RuleFactory::create( EndTimeRule::RULE_NAME, [
+        'end' => 1465238714
+    ] );
+
+    $this->assertInstanceOf( EndTimeRule::class, $rule );
+
+  } // createEndTimeRuleEpochIntSuccess
+
+  public function createEndTimeRuleStringSuccess() {
+
+    $rule = RuleFactory::create( EndTimeRule::RULE_NAME, [
+        'end' => 'Mon, 06 Jun 2016 18:45:13 GMT'
+    ] );
+
+    $this->assertInstanceOf( EndTimeRule::class, $rule );
+
+  } // createEndTimeRuleStringSuccess
 
   /**
    * @test
@@ -152,6 +290,16 @@ class RuleFactoryTest extends BaseTest {
     RuleFactory::create( EndTimeRule::RULE_NAME );
 
   } // createEndTimeRuleFail
+
+  public function createEndTimeRuleStringFormatFail() {
+
+    $this->expectException( DateTimeImmutableException::class );
+
+    RuleFactory::create( EndTimeRule::RULE_NAME, [
+        'end' => 'gibberish'
+    ] );
+
+  } // createEndTimeRuleStringFormatFail
 
   /**
    * @test
