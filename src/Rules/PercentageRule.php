@@ -43,6 +43,10 @@ class PercentageRule extends RuleAbstract {
    */
   public function canAccess( $identifier = null ) {
 
+    if ( $identifier === null ) {
+      return false;
+    }
+
     return ( $this->_getBucket( $identifier ) <= $this->_percentage );
 
   } // canAccess
