@@ -40,6 +40,17 @@ class PercentageRuleTest extends BaseTest {
   /**
    * @test
    */
+  public function canAccessFalseNullIdentifier() {
+
+    $this->_getRule( 100, 'feature' );
+
+    $this->assertFalse( $this->_rule->canAccess( null ) );
+
+  } // canAccessFalseNullIdentifier
+
+  /**
+   * @test
+   */
   public function invalidPercentage() {
 
     $this->expectException( \InvalidArgumentException::class );
