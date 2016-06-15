@@ -2,9 +2,10 @@
 
 namespace Behance\NBD\Gatekeeper;
 
+use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
-use Behance\NBD\Gatekeeper\Rules\PercentageRule;
+use Behance\NBD\Gatekeeper\Rules\RuleAbstract;
 use Behance\NBD\Gatekeeper\Rules\StartTimeRule;
 use Behance\NBD\Gatekeeper\Test\BaseTest;
 
@@ -66,7 +67,7 @@ class RulesetTest extends BaseTest {
     $ruleset->addRule( $rule_2 );
 
     $this->assertFalse( $ruleset->canAccess() );
-    $this->assertTrue( $ruleset->canAccess( 123 ) );
+    $this->assertTrue( $ruleset->canAccess( [ RuleAbstract::IDENTIFIER_AUTHENTICATED => 123 ] ) );
 
     // to test that order doesn't matter
     $ruleset = new Ruleset();
@@ -74,7 +75,7 @@ class RulesetTest extends BaseTest {
     $ruleset->addRule( $rule_1 );
 
     $this->assertFalse( $ruleset->canAccess() );
-    $this->assertTrue( $ruleset->canAccess( 123 ) );
+    $this->assertTrue( $ruleset->canAccess( [ RuleAbstract::IDENTIFIER_AUTHENTICATED => 123 ] ) );
 
   } // canAccess
 
@@ -84,12 +85,12 @@ class RulesetTest extends BaseTest {
   public function hasRuleOfType() {
 
     $rule_1 = new BinaryRule( true );
-    $rule_2 = new PercentageRule( 20, 'some_feature' );
+    $rule_2 = new AuthenticatedPercentageRule( 20, 'some_feature' );
 
     $ruleset = new Ruleset();
 
     $this->assertFalse( $ruleset->hasRuleOfType( BinaryRule::RULE_NAME ) );
-    $this->assertFalse( $ruleset->hasRuleOfType( PercentageRule::RULE_NAME ) );
+    $this->assertFalse( $ruleset->hasRuleOfType( AuthenticatedPercentageRule::RULE_NAME ) );
 
     $ruleset->addRule( $rule_1 );
 
@@ -98,7 +99,7 @@ class RulesetTest extends BaseTest {
     $ruleset->addRule( $rule_2 );
 
     $this->assertTrue( $ruleset->hasRuleOfType( BinaryRule::RULE_NAME ) );
-    $this->assertTrue( $ruleset->hasRuleOfType( PercentageRule::RULE_NAME ) );
+    $this->assertTrue( $ruleset->hasRuleOfType( AuthenticatedPercentageRule::RULE_NAME ) );
     $this->assertFalse( $ruleset->hasRuleOfType( IdentifierRule::RULE_NAME ) );
 
   } // hasRuleOfType

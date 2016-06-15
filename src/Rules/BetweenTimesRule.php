@@ -30,7 +30,7 @@ class BetweenTimesRule extends TimeRuleAbstract {
   /**
    * {@inheritdoc}
    */
-  public function canAccess( $identifier = null ) {
+  public function canAccess( array $identifiers = [] ) {
 
     $current_time = $this->_getCurrentTime();
 

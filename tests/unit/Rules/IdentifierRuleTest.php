@@ -23,7 +23,7 @@ class IdentifierRuleTest extends BaseTest {
     $rule = new IdentifierRule( self::TEST_IDENTIFIERS );
 
     foreach ( self::TEST_IDENTIFIERS as $identifier ) {
-      $this->assertTrue( $rule->canAccess( $identifier ) );
+      $this->assertTrue( $rule->canAccess( [ RuleAbstract::IDENTIFIER_AUTHENTICATED => $identifier ] ) );
     }
 
   } // canAccess
@@ -36,7 +36,7 @@ class IdentifierRuleTest extends BaseTest {
     $rule = new IdentifierRule();
 
     foreach ( self::TEST_IDENTIFIERS as $identifier ) {
-      $this->assertFalse( $rule->canAccess( $identifier ) );
+      $this->assertFalse( $rule->canAccess( [ RuleAbstract::IDENTIFIER_AUTHENTICATED => $identifier ] ) );
     }
 
   } // noAccess

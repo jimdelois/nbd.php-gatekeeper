@@ -5,6 +5,8 @@ namespace Behance\NBD\Gatekeeper;
 use Behance\NBD\Gatekeeper\Exceptions\DateTimeImmutableException;
 use Behance\NBD\Gatekeeper\Exceptions\MissingRuleParameterException;
 use Behance\NBD\Gatekeeper\Exceptions\UnknownRuleTypeException;
+use Behance\NBD\Gatekeeper\Rules\AnonymousPercentageRule;
+use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\BetweenTimesRule;
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
@@ -55,13 +57,24 @@ class RuleFactory {
             self::_getDateImmutableObject( self::_getRuleParam( 'end', $type, $params ) )
         );
 
-      case PercentageRule::RULE_NAME:
+      case AuthenticatedPercentageRule::RULE_NAME:
 
         if ( $feature == null ) {
-          throw new MissingRuleParameterException( 'Missing required $feature parameter for PercentageRule' );
+          throw new MissingRuleParameterException( "Missing required {$feature} parameter for AuthenticatedPercentageRule" );
         }
 
-        return new PercentageRule(
+        return new AuthenticatedPercentageRule(
+            self::_getRuleParam( 'percentage', $type, $params ),
+            $feature
+        );
+
+      case AnonymousPercentageRule::RULE_NAME:
+
+        if ( $feature == null ) {
+          throw new MissingRuleParameterException( "Missing required {$feature} parameter for AnonymousPercentageRule" );
+        }
+
+        return new AnonymousPercentageRule(
             self::_getRuleParam( 'percentage', $type, $params ),
             $feature
         );

@@ -5,10 +5,10 @@ namespace Behance\NBD\Gatekeeper\Rules;
 interface RuleInterface {
 
   /**
-   * @param  mixed $identifier
+   * @param  array $identifiers
    *
    * @return bool
    */
-  public function canAccess( $identifier = null );
+  public function canAccess( array $identifiers = [] );
 
 } // RuleInterface

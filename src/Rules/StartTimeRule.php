@@ -23,7 +23,7 @@ class StartTimeRule extends TimeRuleAbstract {
   /**
    * {@inheritdoc}
    */
-  public function canAccess( $check_time = null ) {
+  public function canAccess( array $identifiers = [] ) {
 
     return $this->_getCurrentTime() >= $this->_start_time;
 

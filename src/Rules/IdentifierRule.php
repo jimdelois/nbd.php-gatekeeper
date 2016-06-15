@@ -41,13 +41,15 @@ class IdentifierRule extends RuleAbstract {
   /**
    * {@inheritdoc}
    */
-  public function canAccess( $identifier = null ) {
+  public function canAccess( array $identifiers = [] ) {
 
-    if ( $identifier === null ) {
-      return false;
-    }
+    $this->_validateIdentifiers( $identifiers );
 
-    return array_key_exists( $identifier, $this->_getIdentifierMap() );
+    $valid_identifiers = $this->_getIdentifierMap();
+
+    return
+        isset( $identifiers[ self::IDENTIFIER_AUTHENTICATED ] )
+        && array_key_exists( $identifiers[ self::IDENTIFIER_AUTHENTICATED ], $valid_identifiers );
 
   } // canAccess
 
