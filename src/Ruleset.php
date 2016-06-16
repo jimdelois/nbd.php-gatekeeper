@@ -30,15 +30,15 @@ class Ruleset {
   } // getRules
 
   /**
-   * @param  mixed $identifier
+   * @param  array $identifiers
    *
    * @return bool
    */
-  public function canAccess( $identifier = null ) {
+  public function canAccess( array $identifiers = [] ) {
 
     foreach ( $this->_rules as $rule ) {
 
-      if ( $rule->canAccess( $identifier ) ) {
+      if ( $rule->canAccess( $identifiers ) ) {
         return true;
       }
 

@@ -5,9 +5,7 @@ namespace Behance\NBD\Gatekeeper\Rules;
 use Behance\NBD\Gatekeeper\Exceptions\ParameterValidationException;
 use Behance\NBD\Gatekeeper\IdentifierHashBucket;
 
-class PercentageRule extends RuleAbstract {
-
-  const RULE_NAME = 'percentage';
+abstract class PercentageRuleAbstract extends RuleAbstract {
 
   /**
    * @var int
@@ -41,13 +39,13 @@ class PercentageRule extends RuleAbstract {
   /**
    * {@inheritdoc}
    */
-  public function canAccess( $identifier = null ) {
+  public function canAccess( array $identifiers = [] ) {
 
-    if ( $identifier === null ) {
-      return false;
-    }
+    $this->_validateIdentifiers( $identifiers );
 
-    return ( $this->_getBucket( $identifier ) <= $this->_percentage );
+    return
+        isset( $identifiers[ static::IDENTIFIER_TYPE ] )
+        && $this->_getBucket( $identifiers[ static::IDENTIFIER_TYPE ] ) <= $this->_percentage;
 
   } // canAccess
 
@@ -64,4 +62,4 @@ class PercentageRule extends RuleAbstract {
 
   } // _getBucket
 
-} // PercentageRule
+} // PercentageRuleAbstract

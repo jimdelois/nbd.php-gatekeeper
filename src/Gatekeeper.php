@@ -2,7 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper;
 
-use Behance\NBD\Gatekeeper\Rules\PercentageRule;
+use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
 
 class Gatekeeper {
 
@@ -22,57 +22,35 @@ class Gatekeeper {
 
   /**
    * @param  string $feature
-   * @param  string|array|null $identifier
+   * @param  array  $identifiers
    *
    * @return bool
    */
-  public function canAccess( $feature, $identifier = null ) {
+  public function canAccess( $feature, array $identifiers = [] ) {
 
-    $identifier = ( is_array( $identifier ) )
-                  ? $identifier
-                  : [ $identifier ];
-
-    foreach ( $identifier as $single_identifier ) {
-      if ( $this->_ruleset_provider->getRuleset( $feature )->canAccess( $single_identifier ) ) {
-        return true;
-      }
-    }
-
-    return false;
+    return $this->_ruleset_provider->getRuleset( $feature )->canAccess( $identifiers );
 
   } // canAccess
 
   /**
-   * @param  string|array|null $identifier
+   * @param  array $identifiers
    *
    * @return array
    */
-  public function getActiveFeatures( $identifier = null ) {
+  public function getActiveFeatures( array $identifiers = [] ) {
 
-    return array_filter( $this->_ruleset_provider->getFeatures(), function( $feature_name ) use ( $identifier ) {
-      return $this->canAccess( $feature_name, $identifier );
+    return array_filter( $this->_ruleset_provider->getFeatures(), function( $feature_name ) use ( $identifiers ) {
+      return $this->canAccess( $feature_name, $identifiers );
     } );
 
   } // getActiveFeatures
 
   /**
-   * @param string|array|null $identifier
+   * @param array $identifiers
    *
    * @return array
    */
-  public function getPercentageFeaturesByActiveState( $identifier = null ) {
-
-    return $this->_getRuleTypeFeaturesByActiveState( PercentageRule::RULE_NAME, $identifier );
-
-  } // getPercentageFeaturesByActiveState
-
-  /**
-   * @param string            $rule_type
-   * @param string|array|null $identifier
-   *
-   * @return array
-   */
-  private function _getRuleTypeFeaturesByActiveState( $rule_type, $identifier = null ) {
+  public function getPercentageFeaturesByActiveState( array $identifiers = [] ) {
 
     $feature_state_map = [];
     $features          = $this->_ruleset_provider->getFeatures();
@@ -81,14 +59,14 @@ class Gatekeeper {
 
       $ruleset = $this->_ruleset_provider->getRuleset( $feature );
 
-      if ( $ruleset->hasRuleOfType( $rule_type ) ) {
-        $feature_state_map[ $feature ] = $this->canAccess( $feature, $identifier );
+      if ( $ruleset->hasRuleOfType( AuthenticatedPercentageRule::RULE_NAME ) ) {
+        $feature_state_map[ $feature ] = $this->canAccess( $feature, $identifiers );
       }
 
     } // foreach features
 
     return $feature_state_map;
 
-  } // _getRuleTypeFeaturesByActiveState
+  } // getPercentageFeaturesByActiveState
 
 } // Gatekeeper

@@ -23,13 +23,9 @@ class EndTimeRule extends TimeRuleAbstract {
   /**
    * {@inheritdoc}
    */
-  public function canAccess( $check_time = null ) {
+  public function canAccess( array $identifiers = [] ) {
 
-    if ( $check_time === null ) {
-      $check_time = $this->_getCurrentTime();
-    }
-
-    return $check_time <= $this->_end_time;
+    return $this->_getCurrentTime() <= $this->_end_time;
 
   } // canAccess
 

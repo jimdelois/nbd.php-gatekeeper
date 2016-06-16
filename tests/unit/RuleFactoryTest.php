@@ -6,6 +6,8 @@ use Behance\NBD\Gatekeeper\Exceptions\DateTimeImmutableException;
 use Behance\NBD\Gatekeeper\Exceptions\MissingRuleParameterException;
 use Behance\NBD\Gatekeeper\Exceptions\UnknownRuleTypeException;
 use Behance\NBD\Gatekeeper\IdentifierHashBucket;
+use Behance\NBD\Gatekeeper\Rules\AnonymousPercentageRule;
+use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\BetweenTimesRule;
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
@@ -304,59 +306,117 @@ class RuleFactoryTest extends BaseTest {
   /**
    * @test
    */
-  public function createPercentageRuleSuccess() {
+  public function createAuthenticatedPercentageRuleSuccess() {
 
     $rule = RuleFactory::create(
-        PercentageRule::RULE_NAME,
+        AuthenticatedPercentageRule::RULE_NAME,
         [
             'percentage' => 10,
         ],
         'feature'
     );
 
-    $this->assertInstanceOf( PercentageRule::class, $rule );
+    $this->assertInstanceOf( AuthenticatedPercentageRule::class, $rule );
 
-  } // createPercentageRuleSuccess
+  } // createAuthenticatedPercentageRuleSuccess
 
   /**
    * @test
    */
-  public function createPercentageRuleFeatureMissingFail() {
+  public function createAuthenticatedPercentageRuleFeatureMissingFail() {
 
     $this->expectException( MissingRuleParameterException::class );
 
     RuleFactory::create(
-        PercentageRule::RULE_NAME,
+        AuthenticatedPercentageRule::RULE_NAME,
         [ 'percentage' => 10 ]
     );
 
-  } // createPercentageRuleFeatureMissingFail
+  } // createAuthenticatedPercentageRuleFeatureMissingFail
 
   /**
    * @test
    */
-  public function createPercentageRulePercentageMissingFail() {
+  public function createAuthenticatedPercentageRulePercentageMissingFail() {
 
     $this->expectException( MissingRuleParameterException::class );
 
     RuleFactory::create(
-        PercentageRule::RULE_NAME,
+        AuthenticatedPercentageRule::RULE_NAME,
         [ 'feature' => 'feature' ]
     );
 
-  } // createPercentageRulePercentageMissingFail
+  } // createAuthenticatedPercentageRulePercentageMissingFail
 
   /**
    * @test
    */
-  public function createPercentageRuleParamMissingFail() {
+  public function createAuthenticatedPercentageRuleParamMissingFail() {
 
     $this->expectException( MissingRuleParameterException::class );
 
     RuleFactory::create(
-        PercentageRule::RULE_NAME
+        AuthenticatedPercentageRule::RULE_NAME
     );
 
-  } // createPercentageRuleParamMissingFail
+  } // createAuthenticatedPercentageRuleParamMissingFail
+
+  /**
+   * @test
+   */
+  public function createAnonymousPercentageRuleSuccess() {
+
+    $rule = RuleFactory::create(
+        AnonymousPercentageRule::RULE_NAME,
+        [
+            'percentage' => 10,
+        ],
+        'feature'
+    );
+
+    $this->assertInstanceOf( AnonymousPercentageRule::class, $rule );
+
+  } // createAnonymousPercentageRuleSuccess
+
+  /**
+   * @test
+   */
+  public function createAnonymousPercentageRuleFeatureMissingFail() {
+
+    $this->expectException( MissingRuleParameterException::class );
+
+    RuleFactory::create(
+        AnonymousPercentageRule::RULE_NAME,
+        [ 'percentage' => 10 ]
+    );
+
+  } // createAnonymousPercentageRuleFeatureMissingFail
+
+  /**
+   * @test
+   */
+  public function createAnonymousPercentageRulePercentageMissingFail() {
+
+    $this->expectException( MissingRuleParameterException::class );
+
+    RuleFactory::create(
+        AnonymousPercentageRule::RULE_NAME,
+        [ 'feature' => 'feature' ]
+    );
+
+  } // createAnonymousPercentageRulePercentageMissingFail
+
+  /**
+   * @test
+   */
+  public function createAnonymousPercentageRuleParamMissingFail() {
+
+    $this->expectException( MissingRuleParameterException::class );
+
+    RuleFactory::create(
+        AnonymousPercentageRule::RULE_NAME
+    );
+
+  } // createAnonymousPercentageRuleParamMissingFail
 
 } // RuleFactoryTest

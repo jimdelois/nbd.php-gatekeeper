@@ -23,7 +23,7 @@ class BinaryRule extends RuleAbstract {
   /**
    * {@inheritdoc}
    */
-  public function canAccess( $identifier = null ) {
+  public function canAccess( array $identifiers = [] ) {
 
     return $this->_value;
 
