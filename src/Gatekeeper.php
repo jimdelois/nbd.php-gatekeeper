@@ -2,6 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper;
 
+use Behance\NBD\Gatekeeper\Rules\AnonymousPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
 
 class Gatekeeper {
@@ -59,7 +60,8 @@ class Gatekeeper {
 
       $ruleset = $this->_ruleset_provider->getRuleset( $feature );
 
-      if ( $ruleset->hasRuleOfType( AuthenticatedPercentageRule::RULE_NAME ) ) {
+      if ( $ruleset->hasRuleOfType( AuthenticatedPercentageRule::RULE_NAME )
+          || $ruleset->hasRuleOfType( AnonymousPercentageRule::RULE_NAME ) ) {
         $feature_state_map[ $feature ] = $this->canAccess( $feature, $identifiers );
       }
 

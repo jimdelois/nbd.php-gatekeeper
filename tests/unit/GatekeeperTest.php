@@ -2,6 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper;
 
+use Behance\NBD\Gatekeeper\Rules\AnonymousPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
@@ -12,10 +13,11 @@ use Behance\NBD\Gatekeeper\Test\BaseTest;
 
 class GatekeeperTest extends BaseTest {
 
-  const TEST_FEATURE               = 'test_feature';
-  const PER_USER_FEATURE           = 'per_user_feature';
-  const PERCENTAGE_FEATURE         = 'percentage_feature';
-  const COMPLEX_PERCENTAGE_FEATURE = 'complex_percentage_feature';
+  const TEST_FEATURE                 = 'test_feature';
+  const PER_USER_FEATURE             = 'per_user_feature';
+  const PERCENTAGE_FEATURE           = 'percentage_feature';
+  const COMPLEX_PERCENTAGE_FEATURE   = 'complex_percentage_feature';
+  const ANONYMOUS_PERCENTAGE_FEATURE = 'anonymous_percentage_feature';
 
   /**
    * @var \Behance\NBD\Gatekeeper\Gatekeeper
@@ -47,7 +49,23 @@ class GatekeeperTest extends BaseTest {
                 'params' => [
                     'percentage' => 25
                 ]
-            ]
+            ],
+        ],
+        self::PERCENTAGE_FEATURE => [
+            [
+                'type'   => AuthenticatedPercentageRule::RULE_NAME,
+                'params' => [
+                    'percentage' => 25
+                ]
+            ],
+        ],
+        self::ANONYMOUS_PERCENTAGE_FEATURE => [
+            [
+                'type'   => AnonymousPercentageRule::RULE_NAME,
+                'params' => [
+                    'percentage' => 100
+                ]
+            ],
         ],
         self::COMPLEX_PERCENTAGE_FEATURE => [
             [
@@ -99,28 +117,33 @@ class GatekeeperTest extends BaseTest {
   public function getPercentageFeaturesByActiveState() {
 
     $this->assertEquals(
-        [ self::PERCENTAGE_FEATURE => false, self::COMPLEX_PERCENTAGE_FEATURE => false ],
+        [ self::PERCENTAGE_FEATURE => false, self::COMPLEX_PERCENTAGE_FEATURE => false, self::ANONYMOUS_PERCENTAGE_FEATURE => false ],
         $this->_gatekeeper->getPercentageFeaturesByActiveState()
     );
 
     $this->assertEquals(
-        [ self::PERCENTAGE_FEATURE => true, self::COMPLEX_PERCENTAGE_FEATURE => true ],
+        [ self::PERCENTAGE_FEATURE => true, self::COMPLEX_PERCENTAGE_FEATURE => true, self::ANONYMOUS_PERCENTAGE_FEATURE => false ],
         $this->_gatekeeper->getPercentageFeaturesByActiveState( [ RuleAbstract::IDENTIFIER_AUTHENTICATED => 111 ] )
     );
 
     $this->assertEquals(
-        [ self::PERCENTAGE_FEATURE => false, self::COMPLEX_PERCENTAGE_FEATURE => false ],
+        [ self::PERCENTAGE_FEATURE => false, self::COMPLEX_PERCENTAGE_FEATURE => false, self::ANONYMOUS_PERCENTAGE_FEATURE => false ],
         $this->_gatekeeper->getPercentageFeaturesByActiveState( [ RuleAbstract::IDENTIFIER_AUTHENTICATED => 222 ] )
     );
 
     $this->assertEquals(
-        [ self::PERCENTAGE_FEATURE => true, self::COMPLEX_PERCENTAGE_FEATURE => true ],
+        [ self::PERCENTAGE_FEATURE => true, self::COMPLEX_PERCENTAGE_FEATURE => true, self::ANONYMOUS_PERCENTAGE_FEATURE => false ],
         $this->_gatekeeper->getPercentageFeaturesByActiveState( [ RuleAbstract::IDENTIFIER_AUTHENTICATED => 555 ] )
     );
 
     $this->assertEquals(
-        [ self::PERCENTAGE_FEATURE => false, self::COMPLEX_PERCENTAGE_FEATURE => true ],
+        [ self::PERCENTAGE_FEATURE => false, self::COMPLEX_PERCENTAGE_FEATURE => true, self::ANONYMOUS_PERCENTAGE_FEATURE => false ],
         $this->_gatekeeper->getPercentageFeaturesByActiveState( [ RuleAbstract::IDENTIFIER_AUTHENTICATED => 321 ] )
+    );
+
+    $this->assertEquals(
+        [ self::PERCENTAGE_FEATURE => false, self::COMPLEX_PERCENTAGE_FEATURE => false, self::ANONYMOUS_PERCENTAGE_FEATURE => true ],
+        $this->_gatekeeper->getPercentageFeaturesByActiveState( [ RuleAbstract::IDENTIFIER_ANONYMOUS => 321 ] )
     );
 
   } // getPercentageFeaturesByActiveState
