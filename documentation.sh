@@ -25,6 +25,7 @@ function loadSSHKey {
 }
 
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
+  echo "kajshdkjashdkjahsdkjhakd HERE"
 
   loadSSHKey
 
