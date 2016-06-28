@@ -8,7 +8,7 @@ use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
 class Gatekeeper {
 
   /**
-   * @var \Behance\NBD\Gatekeeper\RulesetProviderInterface Test
+   * @var \Behance\NBD\Gatekeeper\RulesetProviderInterface
    */
   private $_ruleset_provider;
 

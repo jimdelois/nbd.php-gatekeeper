@@ -9,9 +9,9 @@ install:
 
 script:
   - ./vendor/bin/phpcs --standard=./vendor/behance/php-sniffs/Behance/ruleset.xml ./src ./tests
-  - bash ./documentation.sh
+  #- bash ./documentation.sh
 
-env:
-  global:
-  - ENCRYPTION_LABEL: "8cd55382e843"
-  - COMMIT_AUTHOR_EMAIL: "amchen@adobe.com"
+#env:
+#  global:
+#  - ENCRYPTION_LABEL: "8cd55382e843"
+#  - COMMIT_AUTHOR_EMAIL: "amchen@adobe.com"
