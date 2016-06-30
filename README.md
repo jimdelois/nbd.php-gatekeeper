@@ -79,3 +79,6 @@ else {
 ```
 ## License
 nbd.php-gatekeeper is licensed under the MIT license. See [License File](LICENSE) for more information.
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for information.
