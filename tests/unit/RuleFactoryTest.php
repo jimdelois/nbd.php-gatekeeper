@@ -13,6 +13,7 @@ use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\PercentageRule;
+use Behance\NBD\Gatekeeper\Rules\RandomPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\StartTimeRule;
 use Behance\NBD\Gatekeeper\Test\BaseTest;
 
@@ -418,5 +419,35 @@ class RuleFactoryTest extends BaseTest {
     );
 
   } // createAnonymousPercentageRuleParamMissingFail
+
+  /**
+   * @test
+   */
+  public function createRandomPercentageRuleSuccess() {
+
+    $rule = RuleFactory::create(
+        RandomPercentageRule::RULE_NAME,
+        [
+            'percentage' => 10,
+        ],
+        'feature'
+    );
+
+    $this->assertInstanceOf( RandomPercentageRule::class, $rule );
+
+  } // createRandomPercentageRuleSuccess
+
+  /**
+   * @test
+   */
+  public function createRandomPercentageRuleParamMissingFail() {
+
+    $this->expectException( MissingRuleParameterException::class );
+
+    RuleFactory::create(
+        RandomPercentageRule::RULE_NAME
+    );
+
+  } // createRandomPercentageRuleParamMissingFail
 
 } // RuleFactoryTest

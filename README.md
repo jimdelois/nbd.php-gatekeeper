@@ -11,6 +11,7 @@ Right now it comes with the following rules (though it's easy to add your own to
 <tr><td>IdentifierRule</td><td>Identifiers (ex. user ids) that are in the given list provided by config are granted access.</td></tr>
 <tr><td>AuthenticatedPercentageRule</td><td>Primarily for a/b testing, allows a feature to be turned on for x percentage of users, which is consistently determined automatically by the given user identifier. For this rule, "authenticated" is meant to represent that the rule should only be applied to an identifier that is marked as "authenticated" (see "Basic Usage" example below.)</td></tr>
 <tr><td>AnonymousPercentageRule</td><td>Exactly the same as AuthenticatedPercentageRule, except this rule type only applies to identifiers that are marked as "anonymous."</td></tr>
+<tr><td>RandomPercentageRule</td><td>This rule creates a new, random identifier every time access to the rule is checked. This rule can be used for action you want to occur x% of the time, not based on any actual identifier.</td></tr>
 <tr><td>BetweenTimesRule</td><td>grants access if the current date/time is between two specified date/times</td></tr>
 <tr><td>StartTimeRule</td><td>grants access beginning at a specified date/time</td></tr>
 <tr><td>EndTimeRule</td><td>grants access up until a specified end date/time</td></tr>

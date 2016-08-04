@@ -12,6 +12,7 @@ use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\PercentageRule;
+use Behance\NBD\Gatekeeper\Rules\RandomPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\StartTimeRule;
 
 class RuleFactory {
@@ -79,6 +80,17 @@ class RuleFactory {
             $feature
         );
 
+      case RandomPercentageRule::RULE_NAME:
+
+        if ( $feature == null ) {
+          throw new MissingRuleParameterException( "Missing required {$feature} parameter for RandomPercentageRule" );
+        }
+
+        return new RandomPercentageRule(
+            self::_getRuleParam( 'percentage', $type, $params ),
+            $feature
+        );
+
       default:
         throw new UnknownRuleTypeException( 'Couldn\'t find rule of type "' . $type . '"' );
 
@@ -110,7 +122,7 @@ class RuleFactory {
    *
    * @return \DateTimeImmutable
    *
-   * @throws Behance\NBD\Gatekeeper\Exceptions\DateTimeImmutableException
+   * @throws \Behance\NBD\Gatekeeper\Exceptions\DateTimeImmutableException
    */
   private static function _getDateImmutableObject( $date_time ) {
 
