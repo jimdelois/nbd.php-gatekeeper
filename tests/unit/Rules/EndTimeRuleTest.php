@@ -2,6 +2,7 @@
 
 namespace Behance\NBD\Gatekeeper\Rules;
 
+use Behance\NBD\Gatekeeper\Exceptions\InvalidIdentifierException;
 use Behance\NBD\Gatekeeper\Test\BaseTest;
 
 class EndTimeRuleTest extends BaseTest {

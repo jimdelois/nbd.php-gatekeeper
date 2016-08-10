@@ -9,12 +9,12 @@ class BetweenTimesRule extends TimeRuleAbstract {
   /**
    * @var \DateTimeImmutable
    */
-  private $_from_time;
+  protected $_from_time;
 
   /**
    * @var \DateTimeImmutable
    */
-  private $_to_time;
+  protected $_to_time;
 
   /**
    * @param \DateTimeImmutable $from
@@ -32,10 +32,17 @@ class BetweenTimesRule extends TimeRuleAbstract {
    */
   public function canAccess( array $identifiers = [] ) {
 
-    $current_time = $this->_getCurrentTime();
-
-    return ( $current_time >= $this->_from_time && $current_time <= $this->_to_time );
+    return $this->_isInTimeRange( $this->_getCurrentTime() );
 
   } // canAccess
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function _isInTimeRange( \DateTimeImmutable $time ) {
+
+    return ( $time >= $this->_from_time && $time <= $this->_to_time );
+
+  } // _isInTimeRange
 
 } // BetweenTimesRule

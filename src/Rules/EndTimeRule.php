@@ -9,7 +9,7 @@ class EndTimeRule extends TimeRuleAbstract {
   /**
    * @var \DateTimeImmutable
    */
-  private $_end_time;
+  protected $_end_time;
 
   /**
    * @param \DateTimeImmutable $end_time
@@ -25,8 +25,17 @@ class EndTimeRule extends TimeRuleAbstract {
    */
   public function canAccess( array $identifiers = [] ) {
 
-    return $this->_getCurrentTime() <= $this->_end_time;
+    return $this->_isInTimeRange( $this->_getCurrentTime() );
 
   } // canAccess
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function _isInTimeRange( \DateTimeImmutable $time ) {
+
+    return $time <= $this->_end_time;
+
+  } // _isInTimeRange
 
 } // EndTimeRule

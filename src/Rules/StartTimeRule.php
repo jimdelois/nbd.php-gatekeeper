@@ -9,7 +9,7 @@ class StartTimeRule extends TimeRuleAbstract {
   /**
    * @var \DateTimeImmutable
    */
-  private $_start_time;
+  protected $_start_time;
 
   /**
    * @param \DateTimeImmutable $start_time
@@ -25,8 +25,17 @@ class StartTimeRule extends TimeRuleAbstract {
    */
   public function canAccess( array $identifiers = [] ) {
 
-    return $this->_getCurrentTime() >= $this->_start_time;
+    return $this->_isInTimeRange( $this->_getCurrentTime() );
 
   } // canAccess
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function _isInTimeRange( \DateTimeImmutable $time ) {
+
+    return $time >= $this->_start_time;
+
+  } // _isInTimeRange
 
 } // StartTimeRule
