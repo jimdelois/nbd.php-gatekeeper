@@ -7,12 +7,15 @@ use Behance\NBD\Gatekeeper\Exceptions\MissingRuleParameterException;
 use Behance\NBD\Gatekeeper\Exceptions\UnknownRuleTypeException;
 use Behance\NBD\Gatekeeper\Rules\AnonymousPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
+use Behance\NBD\Gatekeeper\Rules\BetweenTimesIdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\BetweenTimesRule;
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
+use Behance\NBD\Gatekeeper\Rules\EndTimeIdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\PercentageRule;
 use Behance\NBD\Gatekeeper\Rules\RandomPercentageRule;
+use Behance\NBD\Gatekeeper\Rules\StartTimeIdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\StartTimeRule;
 
 class RuleFactory {
@@ -42,6 +45,7 @@ class RuleFactory {
         );
 
       case BetweenTimesRule::RULE_NAME:
+      case BetweenTimesIdentifierRule::RULE_NAME:
 
         return new BetweenTimesRule(
             self::_getDateImmutableObject( self::_getRuleParam( 'from', $type, $params ) ),
@@ -49,11 +53,13 @@ class RuleFactory {
         );
 
       case StartTimeRule::RULE_NAME:
+      case StartTimeIdentifierRule::RULE_NAME:
         return new StartTimeRule(
             self::_getDateImmutableObject( self::_getRuleParam( 'start', $type, $params ) )
         );
 
       case EndTimeRule::RULE_NAME:
+      case EndTimeIdentifierRule::RULE_NAME:
         return new EndTimeRule(
             self::_getDateImmutableObject( self::_getRuleParam( 'end', $type, $params ) )
         );
