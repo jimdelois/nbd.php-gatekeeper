@@ -8,12 +8,15 @@ use Behance\NBD\Gatekeeper\Exceptions\UnknownRuleTypeException;
 use Behance\NBD\Gatekeeper\IdentifierHashBucket;
 use Behance\NBD\Gatekeeper\Rules\AnonymousPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
+use Behance\NBD\Gatekeeper\Rules\BetweenTimesIdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\BetweenTimesRule;
 use Behance\NBD\Gatekeeper\Rules\BinaryRule;
+use Behance\NBD\Gatekeeper\Rules\EndTimeIdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\PercentageRule;
 use Behance\NBD\Gatekeeper\Rules\RandomPercentageRule;
+use Behance\NBD\Gatekeeper\Rules\StartTimeIdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\StartTimeRule;
 use Behance\NBD\Gatekeeper\Test\BaseTest;
 
@@ -95,6 +98,20 @@ class RuleFactoryTest extends BaseTest {
     $this->assertInstanceOf( BetweenTimesRule::class, $rule );
 
   } // createBetweenTimeRuleObjectSuccess
+
+  /**
+   * @test
+   */
+  public function createBetweenTimeRuleIdentifierObjectSuccess() {
+
+    $rule = RuleFactory::create( BetweenTimesIdentifierRule::RULE_NAME, [
+        'from' => new \DateTimeImmutable(),
+        'to'   => new \DateTimeImmutable(),
+    ] );
+
+    $this->assertInstanceOf( BetweenTimesIdentifierRule::class, $rule );
+
+  } // createBetweenTimeRuleIdentifierObjectSuccess
 
 
   /**
@@ -182,6 +199,19 @@ class RuleFactoryTest extends BaseTest {
   /**
    * @test
    */
+  public function createStartTimeRuleIdentifierObjectSuccess() {
+
+    $rule = RuleFactory::create( StartTimeIdentifierRule::RULE_NAME, [
+        'start' => new \DateTimeImmutable()
+    ] );
+
+    $this->assertInstanceOf( StartTimeIdentifierRule::class, $rule );
+
+  } // createStartTimeRuleIdentifierObjectSuccess
+
+  /**
+   * @test
+   */
   public function createStartTimeRuleEpochStringSuccess() {
 
     $rule = RuleFactory::create( StartTimeRule::RULE_NAME, [
@@ -251,6 +281,19 @@ class RuleFactoryTest extends BaseTest {
     $this->assertInstanceOf( EndTimeRule::class, $rule );
 
   } // createEndTimeRuleObjectSuccess
+
+  /**
+   * @test
+   */
+  public function createEndTimeIdentifierRuleObjectSuccess() {
+
+    $rule = RuleFactory::create( EndTimeIdentifierRule::RULE_NAME, [
+        'end' => new \DateTimeImmutable()
+    ] );
+
+    $this->assertInstanceOf( EndTimeIdentifierRule::class, $rule );
+
+  } // createEndTimeIdentifierRuleObjectSuccess
 
   public function createEndTimeRuleEpochStringSuccess() {
 
