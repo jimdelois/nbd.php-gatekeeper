@@ -45,9 +45,13 @@ class RuleFactory {
         );
 
       case BetweenTimesRule::RULE_NAME:
-      case BetweenTimesIdentifierRule::RULE_NAME:
-
         return new BetweenTimesRule(
+            self::_getDateImmutableObject( self::_getRuleParam( 'from', $type, $params ) ),
+            self::_getDateImmutableObject( self::_getRuleParam( 'to', $type, $params ) )
+        );
+
+      case BetweenTimesIdentifierRule::RULE_NAME:
+        return new BetweenTimesIdentifierRule(
             self::_getDateImmutableObject( self::_getRuleParam( 'from', $type, $params ) ),
             self::_getDateImmutableObject( self::_getRuleParam( 'to', $type, $params ) )
         );
@@ -61,19 +65,16 @@ class RuleFactory {
         return new StartTimeIdentifierRule(
             self::_getDateImmutableObject( self::_getRuleParam( 'start', $type, $params ) )
         );
-        break;
 
       case EndTimeRule::RULE_NAME:
         return new EndTimeRule(
             self::_getDateImmutableObject( self::_getRuleParam( 'end', $type, $params ) )
         );
-      break;
 
       case EndTimeIdentifierRule::RULE_NAME:
         return new EndTimeIdentifierRule(
             self::_getDateImmutableObject( self::_getRuleParam( 'end', $type, $params ) )
         );
-        break;
 
       case AuthenticatedPercentageRule::RULE_NAME:
 

@@ -5,7 +5,6 @@ namespace Behance\NBD\Gatekeeper;
 use Behance\NBD\Gatekeeper\Exceptions\DateTimeImmutableException;
 use Behance\NBD\Gatekeeper\Exceptions\MissingRuleParameterException;
 use Behance\NBD\Gatekeeper\Exceptions\UnknownRuleTypeException;
-use Behance\NBD\Gatekeeper\IdentifierHashBucket;
 use Behance\NBD\Gatekeeper\Rules\AnonymousPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\AuthenticatedPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\BetweenTimesIdentifierRule;
