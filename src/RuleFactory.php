@@ -53,16 +53,27 @@ class RuleFactory {
         );
 
       case StartTimeRule::RULE_NAME:
-      case StartTimeIdentifierRule::RULE_NAME:
         return new StartTimeRule(
             self::_getDateImmutableObject( self::_getRuleParam( 'start', $type, $params ) )
         );
 
+      case StartTimeIdentifierRule::RULE_NAME:
+        return new StartTimeIdentifierRule(
+            self::_getDateImmutableObject( self::_getRuleParam( 'start', $type, $params ) )
+        );
+        break;
+
       case EndTimeRule::RULE_NAME:
-      case EndTimeIdentifierRule::RULE_NAME:
         return new EndTimeRule(
             self::_getDateImmutableObject( self::_getRuleParam( 'end', $type, $params ) )
         );
+      break;
+
+      case EndTimeIdentifierRule::RULE_NAME:
+        return new EndTimeIdentifierRule(
+            self::_getDateImmutableObject( self::_getRuleParam( 'end', $type, $params ) )
+        );
+        break;
 
       case AuthenticatedPercentageRule::RULE_NAME:
 
