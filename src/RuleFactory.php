@@ -13,6 +13,8 @@ use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeIdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
+use Behance\NBD\Gatekeeper\Rules\IpRangeRule;
+use Behance\NBD\Gatekeeper\Rules\IpRule;
 use Behance\NBD\Gatekeeper\Rules\PercentageRule;
 use Behance\NBD\Gatekeeper\Rules\RandomPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\StartTimeIdentifierRule;
@@ -107,6 +109,17 @@ class RuleFactory {
         return new RandomPercentageRule(
             self::_getRuleParam( 'percentage', $type, $params ),
             $feature
+        );
+
+      case IpRule::RULE_NAME:
+        return new IpRule(
+            self::_getRuleParam( 'valid_ips', $type, $params )
+        );
+
+      case IpRangeRule::RULE_NAME:
+        return new IpRangeRule(
+            self::_getRuleParam( 'start_ip', $type, $params ),
+            self::_getRuleParam( 'end_ip', $type, $params )
         );
 
       default:

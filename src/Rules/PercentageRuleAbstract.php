@@ -2,7 +2,6 @@
 
 namespace Behance\NBD\Gatekeeper\Rules;
 
-use Behance\NBD\Gatekeeper\Exceptions\ParameterValidationException;
 use Behance\NBD\Gatekeeper\IdentifierHashBucket;
 
 abstract class PercentageRuleAbstract extends RuleAbstract {

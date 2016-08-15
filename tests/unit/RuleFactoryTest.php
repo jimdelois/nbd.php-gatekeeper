@@ -13,6 +13,8 @@ use Behance\NBD\Gatekeeper\Rules\BinaryRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeIdentifierRule;
 use Behance\NBD\Gatekeeper\Rules\EndTimeRule;
 use Behance\NBD\Gatekeeper\Rules\IdentifierRule;
+use Behance\NBD\Gatekeeper\Rules\IpRangeRule;
+use Behance\NBD\Gatekeeper\Rules\IpRule;
 use Behance\NBD\Gatekeeper\Rules\PercentageRule;
 use Behance\NBD\Gatekeeper\Rules\RandomPercentageRule;
 use Behance\NBD\Gatekeeper\Rules\StartTimeIdentifierRule;
@@ -491,5 +493,54 @@ class RuleFactoryTest extends BaseTest {
     );
 
   } // createRandomPercentageRuleParamMissingFail
+
+  /**
+   * @test
+   */
+  public function createIpRuleSuccess() {
+
+    $rule = RuleFactory::create( IpRule::RULE_NAME, [
+        'valid_ips' => [ '173.194.66.101', '173.194.66.201' ]
+    ] );
+
+    $this->assertInstanceOf( IpRule::class, $rule );
+
+  } // createIpRuleSuccess
+
+  /**
+   * @test
+   */
+  public function createIpRuleFail() {
+
+    $this->expectException( MissingRuleParameterException::class );
+
+    RuleFactory::create( IpRule::RULE_NAME, [] );
+
+  } // createIpRuleFail
+
+  /**
+   * @test
+   */
+  public function createIpRangeRuleSuccess() {
+
+    $rule = RuleFactory::create( IpRangeRule::RULE_NAME, [
+        'start_ip' => '173.194.66.101',
+        'end_ip'   => '173.194.66.201',
+    ] );
+
+    $this->assertInstanceOf( IpRangeRule::class, $rule );
+
+  } // createIpRangeRuleSuccess
+
+  /**
+   * @test
+   */
+  public function createIpRangeRuleFail() {
+
+    $this->expectException( MissingRuleParameterException::class );
+
+    RuleFactory::create( IpRangeRule::RULE_NAME, [] );
+
+  } // createIpRangeRuleFail
 
 } // RuleFactoryTest

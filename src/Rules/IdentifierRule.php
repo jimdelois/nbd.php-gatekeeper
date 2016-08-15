@@ -4,7 +4,8 @@ namespace Behance\NBD\Gatekeeper\Rules;
 
 class IdentifierRule extends RuleAbstract {
 
-  const RULE_NAME = 'identifier';
+  const RULE_NAME      = 'identifier';
+  const USE_IDENTIFIER = self::IDENTIFIER_AUTHENTICATED;
 
   /**
    * @var array
@@ -48,8 +49,8 @@ class IdentifierRule extends RuleAbstract {
     $valid_identifiers = $this->_getIdentifierMap();
 
     return
-        isset( $identifiers[ self::IDENTIFIER_AUTHENTICATED ] )
-        && array_key_exists( $identifiers[ self::IDENTIFIER_AUTHENTICATED ], $valid_identifiers );
+        isset( $identifiers[ static::USE_IDENTIFIER ] )
+        && array_key_exists( $identifiers[ static::USE_IDENTIFIER ], $valid_identifiers );
 
   } // canAccess
 

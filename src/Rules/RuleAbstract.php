@@ -9,10 +9,13 @@ abstract class RuleAbstract implements RuleInterface {
   const IDENTIFIER_AUTHENTICATED = 'authenticated';
   const IDENTIFIER_ANONYMOUS     = 'anonymous';
   const IDENTIFIER_TIME          = 'time';
+  const IDENTIFIER_IP            = 'ip';
 
   const IDENTIFIER_TYPES = [
       self::IDENTIFIER_AUTHENTICATED,
       self::IDENTIFIER_ANONYMOUS,
+      self::IDENTIFIER_TIME,
+      self::IDENTIFIER_IP,
   ];
 
   /**

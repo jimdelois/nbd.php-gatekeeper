@@ -2,8 +2,6 @@
 
 namespace Behance\NBD\Gatekeeper\Rules;
 
-use Behance\NBD\Gatekeeper\Exceptions\ParameterValidationException;
-
 class AnonymousPercentageRule extends PercentageRuleAbstract {
 
   const RULE_NAME       = 'anonymous_percentage';
