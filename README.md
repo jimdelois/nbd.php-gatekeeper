@@ -13,8 +13,13 @@ Right now it comes with the following rules (though it's easy to add your own to
 <tr><td>AnonymousPercentageRule</td><td>Exactly the same as AuthenticatedPercentageRule, except this rule type only applies to identifiers that are marked as "anonymous."</td></tr>
 <tr><td>RandomPercentageRule</td><td>This rule creates a new, random identifier every time access to the rule is checked. This rule can be used for action you want to occur x% of the time, not based on any actual identifier.</td></tr>
 <tr><td>BetweenTimesRule</td><td>grants access if the current date/time is between two specified date/times</td></tr>
-<tr><td>StartTimeRule</td><td>grants access beginning at a specified date/time</td></tr>
-<tr><td>EndTimeRule</td><td>grants access up until a specified end date/time</td></tr>
+<tr><td>StartTimeRule</td><td>grants access beginning at a specified (in the rule config) date/time by using the current time</td></tr>
+<tr><td>EndTimeRule</td><td>grants access up until a specified (in the rule config) end date/time by using the current time</td></tr>
+<tr><td>BetweenTimesIdentifierRule</td><td>grants access if a specific time (supplied as time identifier to canAccess) is between two specified (in the rule config) date/times</td></tr>
+<tr><td>StartTimeIdentifierRule</td><td>grants access if a specified time (supplied as time identifier to canAccess) is after a specified (in the rule config) date/time</td></tr>
+<tr><td>EndTimeIdentifierRule</td><td>grants access if a specified time (supplied as time identifier to canAccess) is before a specified (in the rule config) date/time</td></tr>
+<tr><td>IpRule</td><td>grants access if a specified ip address (supplied as ip identifier to canAccess) is specified (in the rule config) as an allowed IP</td></tr>
+<tr><td>IpRangeRule</td><td>grants access if a specified ip address (supplied as ip identifier to canAccess) is within a specified (in the rule config) IP range</td></tr>
 </table>
 ## Basic Usage
 
@@ -78,6 +83,62 @@ else {
 
 }
 ```
+
+## More Advanced Usage
+A StartTimeRule combined with an IpRangeRule:
+```php
+$rule_config = [
+    'special_secret_stuff' => [
+        // turn the stuff for the admin users
+        [
+            'type'   => \Behance\NBD\Gatekeeper\Rules\IdentifierRule::RULE_NAME,
+            'params' => [
+                'valid_identifiers' => [
+                    123, // admin 1 user id
+                    456, // admin 2 user id
+                ]
+            ]
+        ],
+        // turn on the stuff right away for a range of IPs (ex. your office)
+        [
+            'type'   => \Behance\NBD\Gatekeeper\Rules\IpRangeRule::RULE_NAME,
+            'params' => [
+                'start_ip' => '192.168.56.101',
+                'end_ip'   => '192.168.56.105',
+            ]
+        ],
+        // let everyone see the stuff starting in 2017
+        [
+            'type'   => \Behance\NBD\Gatekeeper\Rules\StartTimeRule::RULE_NAME,
+            'params' => [
+                'start' => new DateTimeImmutable('2017-01-01')
+            ]
+        ],
+    ]
+];
+
+$ruleset_provider = new \Behance\NBD\Gatekeeper\RulesetProviders\ConfigRulesetProvider( $rule_config );
+
+$gatekeeper       = new \Behance\NBD\Gatekeeper\Gatekeeper( $ruleset_provider );
+
+$identifier = [
+    'ip'            => $_SERVER['REMOTE_ADDR'],
+    'authenticated' => 678, // not an admin, so has to be in IP range or it must be 2017 for access to be granted
+];
+
+if ( $gatekeeper->canAccess( 'special_secret_stuff', $identifier ) ) {
+
+   echo "<p>You get to see the secret stuff!</p>";
+
+}
+else {
+
+   echo "<p>There's nothing here to see...</p>";
+
+}
+
+```
+
 ## License
 nbd.php-gatekeeper is licensed under the MIT license. See [License File](LICENSE) for more information.
 
