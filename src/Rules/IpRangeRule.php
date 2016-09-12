@@ -41,8 +41,6 @@ class IpRangeRule extends RuleAbstract {
    */
   public function canAccess( array $identifiers = [] ) {
 
-    $this->_validateIdentifiers( $identifiers );
-
     if ( !isset( $identifiers[ RuleAbstract::IDENTIFIER_IP ] ) ) {
       return false;
     }

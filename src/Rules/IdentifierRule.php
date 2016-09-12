@@ -44,8 +44,6 @@ class IdentifierRule extends RuleAbstract {
    */
   public function canAccess( array $identifiers = [] ) {
 
-    $this->_validateIdentifiers( $identifiers );
-
     $valid_identifiers = $this->_getIdentifierMap();
 
     return

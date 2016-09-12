@@ -40,8 +40,6 @@ abstract class PercentageRuleAbstract extends RuleAbstract {
    */
   public function canAccess( array $identifiers = [] ) {
 
-    $this->_validateIdentifiers( $identifiers );
-
     return
         isset( $identifiers[ static::IDENTIFIER_TYPE ] )
         && $this->_getBucket( $identifiers[ static::IDENTIFIER_TYPE ] ) <= $this->_percentage;

@@ -54,7 +54,6 @@ class AuthenticatedPercentageRuleTest extends BaseTest {
 
     $this->_getRule( 60, 'feature' );
 
-    $this->expectException( InvalidIdentifierException::class );
     $this->assertFalse( $this->_rule->canAccess( [ 'balhblah' => '4' ] ) );
 
   } // canAccessBadIdentifier
